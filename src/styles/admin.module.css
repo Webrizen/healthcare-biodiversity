@@ -1,0 +1,129 @@
+.admin{
+    display: grid;
+    grid-template-columns: 25% 1fr;
+    gap: 10px;
+    width: 70vw;
+    min-height: 85vh;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tabs{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 0.1px solid silver;
+    padding: 10px;
+    border-radius: 4px;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 10%;
+}
+.leftTabs{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.leftTabs a{
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+.leftTabs a:hover{
+    background: rgba(0,0,0,0.1);
+}
+
+.mainAdmin{
+    width: 100%;
+    height: 100%;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.createPost{
+    border: none;
+    outline: none;
+}
+
+.createPost hr{
+    width: 40%;
+    border: none;
+    height: 10px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 35px;
+}
+
+.createPost form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.createPost form select, .createPost form input{
+    border: 0.1px solid rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 15px;
+    background: #fff;
+}
+
+.createPost form h1{
+    font-size: 3rem;
+    outline: none;
+}
+
+.imageUpload{
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageUpload input{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.infoModel{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: min-content;
+    height: min-content;
+    white-space: nowrap;
+    padding: 40px;
+    background: rgba(0,0,0,0.1);
+    backdrop-filter: blur(2px);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+
+.imageUpload img{
+    width: 100%;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 768px) {
+    .admin{
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

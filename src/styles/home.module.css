@@ -1,0 +1,221 @@
+.Home{
+    display: grid;
+    grid-template-columns: 1fr 25%;
+    width: 70vw;
+    margin: 0 auto;
+    padding: 20px;
+}
+.HomeCard{
+    width: 100%;
+    padding: 10px;
+    height: auto;
+}
+.VerticalPosts {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+.cattfatty{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.latestPost{
+    width: 100%;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+.latestPost img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.latestPost .info{
+    background: rgba(0,0,0,0.1);
+    backdrop-filter: blur(90px);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    transition: bottom 0.7s ease-in-out;
+}
+
+.latestPost:hover .info{
+    bottom: -200%;
+}
+
+.latestPost .info p{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+}
+
+.latestPost .info{
+    color: #eee;
+}
+
+@media only screen and (max-width: 768px) {
+    .latestPost img{
+        height: 400px;
+    }
+    .latestPost .info h1{
+        font-size: 20px;
+    }
+    .latestPost .info p{
+        font-size: 12px;
+    }
+    .latestPost .info span{
+        font-size: 15px;
+    }
+    .latestPost .info{
+        bottom: 0;
+    }
+    .latestPost:active .info{
+        bottom: -200%;
+    }
+}
+
+.SixPosts {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.image{
+    width: 100%;
+    height: 100%;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: max-content;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(90px);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    transition: bottom 0.7s ease-in-out;
+}
+
+
+.card:hover .info {
+    bottom: -200%;
+}
+
+.card .info p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.card .info {
+    color: #eee;
+}
+
+.card .info h1 {
+    font-size: 20px;
+}
+
+.card .info span{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 768px) {
+    .SixPosts{
+        grid-template-columns: 1fr;
+    }
+    .card{
+        height: 400px;
+    }
+    .card .info span{
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.vertposts{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+.TrendingPosts{
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    cursor: pointer;
+    padding: 20px;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info .chip{
+    font-size: 10px;
+    padding: 5px 10px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 35px;
+    width: min-content;
+    white-space: nowrap;
+}
+
+.info p{
+    font-size: 15px;
+}
+
+.info h2{
+    font-size: 20px;
+}
+
+.TrendingPosts:hover{
+    opacity: 0.7;
+}
