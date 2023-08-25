@@ -1,22 +1,18 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage"; 
 
 const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+    apiKey: "AIzaSyAxiBrtzp8f1dnk_zOXUTickFOmAPkzCEU",
+    authDomain: "healthcare-biodiversity.firebaseapp.com",
+    databaseURL: "https://healthcare-biodiversity-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "healthcare-biodiversity",
+    storageBucket: "healthcare-biodiversity.appspot.com",
+    messagingSenderId: "1013153530816",
+    appId: "1:1013153530816:web:b7cf98a33980b1004dfe25",
+    measurementId: "G-V9ERT6SV3Q"
 };
 
 // Initialize Firebase
 let firebase_app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-// Initialize Firestore
-const db = getFirestore();
-const storage = getStorage();
-
-export { firebase_app, db, storage  }; // Export both the app and Firestore instance
+export default firebase_app;

@@ -19,10 +19,6 @@
     cursor: pointer;
 }
 
-.logo:hover{
-    background: rgba(0,0,0,0.1);
-}
-
 .logo img{
     width: auto;
     height: 100%;
@@ -41,12 +37,7 @@
     width: 45px;
     height: 45px;
     border-radius: 4px;
-    font-size: large;
     cursor: pointer;
-}
-
-.links .ico:hover{
-    background: rgba(0,0,0,0.1);
 }
 
 @media only screen and (max-width: 600px){
