@@ -215,7 +215,7 @@ export function DefaultSidebar() {
               Inbox
               <ListItemSuffix>
                 <Chip
-                  value="14"
+                  value="0"
                   size="sm"
                   variant="ghost"
                   color="blue-gray"
