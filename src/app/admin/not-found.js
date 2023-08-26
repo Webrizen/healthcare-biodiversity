@@ -5,6 +5,7 @@ import Image from 'next/image';
 import NotFoundImage from '@/assets/404.gif';
 
 export default function NotFound() {
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">

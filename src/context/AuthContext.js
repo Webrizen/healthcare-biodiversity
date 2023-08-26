@@ -3,7 +3,8 @@ import {
     onAuthStateChanged,
     getAuth,
 } from 'firebase/auth';
-import { firebase_app } from '@/firebase/config';
+import firebase_app from '@/firebase/config';
+import { Spinner } from '@material-tailwind/react';
 
 const auth = getAuth(firebase_app);
 
@@ -32,7 +33,7 @@ export const AuthContextProvider = ({
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {loading ? <div className="loader"><span></span></div> : children}
+            {loading ? <div className='loader'><Spinner /></div> : children}
         </AuthContext.Provider>
     );
 };

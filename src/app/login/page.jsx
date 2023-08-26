@@ -1,34 +1,38 @@
 "use client";
 import React from "react";
 import styles from "@/styles/login.module.css";
-import { BsGoogle, BsGithub } from "react-icons/bs";
-import signIn from "@/firebase/auth/signin";
+import { BsGoogle } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { firebase_app } from "@/firebase/config";
+import signIn from "@/firebase/auth/signin";
 import Swal from 'sweetalert2';
+import { Button, Spinner } from "@material-tailwind/react";
 
 export default function page() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
-  const auth = getAuth(firebase_app);
 
   const handleForm = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const { result, error } = await signIn(email, password);
 
     if (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'An error occurred while signing in.',
-      });
-    } else {
-      router.push("/admin");
+        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'An error occurred while signing in.',
+        });
+       setIsLoading(false);
+    } else{
+      return router.push("/admin");
+      setIsLoading(false);
     }
-  };
+}
+  
 
   const signInWithGoogle = async () => {
     try {
@@ -47,7 +51,7 @@ export default function page() {
   return (
     <div className={styles.loginContainer}>
       <section className={styles.loginSection}>
-        <h2>Welcome Back!</h2>
+        <h1 className="text-5xl">Welcome Back!</h1>
         <p>Login to your account</p>
         <form className={styles.loginForm} onSubmit={handleForm}>
           <div className={styles.inputGroup}>
@@ -63,15 +67,16 @@ export default function page() {
               placeholder="Enter your password"
             />
           </div>
-          <button className={styles.loginButton}>Login</button>
+          <Button type="submit">{isLoading ? <Spinner /> : "Login"}</Button>
         </form>
         <div className={styles.separator}>or</div>
         <div className={styles.socialLogin}>
-          <button className={styles.googleLogin} onClick={signInWithGoogle}>
+          <Button className={styles.googleLogin} onClick={signInWithGoogle}>
             <BsGoogle className={styles.icon} /> Continue with Google
-          </button>
+          </Button>
         </div>
       </section>
     </div>
   );
 }
+
