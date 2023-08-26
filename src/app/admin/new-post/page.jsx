@@ -24,6 +24,7 @@ export default function Page() {
   const [editorContent, setEditorContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [allCategories, setAllCategories] = useState([]);
+  const [allAuthors, setAllAuthors] = useState([]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -38,13 +39,27 @@ export default function Page() {
       try {
         const response = await fetch("/api/categories");
         const data = await response.json();
-        setAllCategories(data.categories);
+        setAllCategories(data.categories); // Make sure you're setting data.categories
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     }
 
     fetchAllCategories();
+  }, []);
+
+  useEffect(() => {
+    async function fetchAllAuthors() {
+      try {
+        const response = await fetch("/api/authors");
+        const data = await response.json();
+        setAllAuthors(data); // Set the fetched authors data
+      } catch (error) {
+        console.error("Error fetching authors:", error);
+      }
+    }
+
+    fetchAllAuthors();
   }, []);
 
   const handleTitleChange = (event) => {
@@ -182,9 +197,9 @@ export default function Page() {
             onChange={(e) => setCategories(e.target.value)}
           >
             <option value="">Select</option>
-            {allCategories.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
+            {Object.keys(allCategories).map((categoryId) => (
+              <option key={categoryId} value={allCategories[categoryId].name}>
+                {allCategories[categoryId].name}
               </option>
             ))}
           </select>
@@ -198,13 +213,19 @@ export default function Page() {
             onChange={(e) => setKeywords(e.target.value)}
           />
           <label htmlFor="Author">Author*</label>
-          <input
-            type="text"
+          <select
             name="Author"
             required
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-          />
+          >
+            <option value="">Select</option>
+            {allAuthors.map((author) => (
+              <option key={author.id} value={author.name}>
+                {author.name}
+              </option>
+            ))}
+          </select>
           <label htmlFor="Content">Add Life To Your Blog*</label>
           <SunEditor
             width="100%"
