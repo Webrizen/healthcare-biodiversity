@@ -19,6 +19,8 @@ import {
   Input,
   Spinner
 } from '@material-tailwind/react';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import firebase_app from '@/firebase/config';
 
 const TABLE_HEAD = ['Thumbnail', 'Title', 'Date', 'Author', 'Actions'];
 
@@ -27,19 +29,20 @@ export default function page() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchBlogPosts() {
-      try {
-        const response = await fetch('/api/blogs');
-        const data = await response.json();
-        setBlogPosts(data.blogPosts);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching blog posts:', error);
-        setLoading(false);
-      }
-    }
+    const db = getFirestore(firebase_app);
+    const blogsCollection = collection(db, 'blogs');
+    
+    // Initialize the listener
+    const unsubscribe = onSnapshot(blogsCollection, (snapshot) => {
+      const blogData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setBlogPosts(blogData);
+      setLoading(false);
+    });
 
-    fetchBlogPosts();
+    return () => {
+      // Unsubscribe when component unmounts
+      unsubscribe();
+    };
   }, []);
 
   return (
