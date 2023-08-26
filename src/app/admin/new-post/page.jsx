@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/styles/admin.module.css";
 import Placeholder from "@/assets/placeholder.svg";
 import Image from "next/image";
@@ -23,6 +23,7 @@ export default function Page() {
   const [author, setAuthor] = useState("");
   const [editorContent, setEditorContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [allCategories, setAllCategories] = useState([]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -31,6 +32,20 @@ export default function Page() {
       setSelectedImage(imageUrl);
     }
   };
+
+  useEffect(() => {
+    async function fetchAllCategories() {
+      try {
+        const response = await fetch("/api/categories");
+        const data = await response.json();
+        setAllCategories(data.categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+
+    fetchAllCategories();
+  }, []);
 
   const handleTitleChange = (event) => {
     const title = event.target.textContent;
@@ -47,9 +62,9 @@ export default function Page() {
 
     try {
       Swal.fire({
-        icon: 'loading',
-        title: 'Uploading Blog Thumbnail',
-        text: 'Your blog image is uploading...',
+        icon: "loading",
+        title: "Uploading Blog Thumbnail",
+        text: "Your blog image is uploading...",
       });
       const storage = getStorage();
 
@@ -60,9 +75,9 @@ export default function Page() {
       const imageUrl = await getDownloadURL(storageRef);
 
       Swal.fire({
-        icon: 'loading',
-        title: 'Connecting With Database',
-        text: 'Your blog Data is uploading...',
+        icon: "loading",
+        title: "Connecting With Database",
+        text: "Your blog Data is uploading...",
       });
       // Prepare blog data
       const blogData = {
@@ -87,21 +102,20 @@ export default function Page() {
 
       // Show success alert for image upload
       Swal.fire({
-        icon: 'success',
-        title: 'Image and Data Uploaded',
-        text: 'Your blog image and data have been uploaded successfully!',
+        icon: "success",
+        title: "Image and Data Uploaded",
+        text: "Your blog image and data have been uploaded successfully!",
       });
 
       // Rest of the success alert remains the same...
-
     } catch (error) {
       // Show error alert using SweetAlert
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An error occurred while creating the blog post.',
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while creating the blog post.",
       });
-      console.error('Error creating blog post:', error);
+      console.error("Error creating blog post:", error);
     }
   };
 
@@ -121,7 +135,12 @@ export default function Page() {
             type="text"
             id="permalink"
             name="permalink"
-            style={{ padding: "5px", color: "rgba(0,0,0,0.5)", background: 'none', border: 'none' }}
+            style={{
+              padding: "5px",
+              color: "rgba(0,0,0,0.5)",
+              background: "none",
+              border: "none",
+            }}
             placeholder="enter-your-blog-title"
             value={`Your Blog Permalink: http://localhost:3000/blog/${permalink}`}
             readOnly
@@ -163,7 +182,11 @@ export default function Page() {
             onChange={(e) => setCategories(e.target.value)}
           >
             <option value="">Select</option>
-            <option value="Helathcare">Healthcare</option>
+            {allCategories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
           </select>
           <label htmlFor="Keywords">Keywords*</label>
           <input

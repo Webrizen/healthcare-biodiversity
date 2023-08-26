@@ -5,7 +5,7 @@ const db = getFirestore(firebaseApp);
 
 async function deleteCategoryFromFirestore(documentId) {
   try {
-    const categoryRef = doc(collection(db, 'categories'), documentId);
+    const categoryRef = doc(collection(db, 'Categories'), documentId);
     await deleteDoc(categoryRef);
     console.log('Document deleted successfully.');
   } catch (error) {
