@@ -12,7 +12,7 @@ module.exports = withMT({
   ],
   theme: {
     fontFamily: {
-      sans: ["Ubuntu", "sans-serif"],
+      sans: ["Poppins", "sans-serif"],
     },
     extend: {
       backgroundImage: {

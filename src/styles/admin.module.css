@@ -15,23 +15,12 @@
     flex-direction: column;
     justify-content: space-between;
     border: 0.1px solid silver;
-    padding: 10px;
     border-radius: 4px;
     position: sticky;
     position: -webkit-sticky;
     top: 10%;
-}
-.leftTabs{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.leftTabs a{
-    padding: 10px 20px;
-    border-radius: 4px;
-}
-.leftTabs a:hover{
-    background: rgba(0,0,0,0.1);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .mainAdmin{
