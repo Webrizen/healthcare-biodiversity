@@ -3,131 +3,31 @@ import styles from "@/styles/home.module.css";
 import Image from "next/image";
 import { BsDot } from "react-icons/bs";
 
-
-const SixPosts = async () => {
-
+const SixPosts = ({ data }) => {
   return (
     <div className={styles.SixPosts}>
-          <div className={styles.card}>
-            <div className={styles.image}>
-              <Image
-                src={"/placeholder.svg"}
-                alt={"Something Went Wrong!"}
-                width={600}
-                placeholder="blur"
-        blurDataURL="/placeholder.svg"
-                quality={100}
-                height={400}
-              />
-            </div>
-            <div className={styles.info}>
-              <p>
-                {"Loading..."} <BsDot />{" "}{"Loading..."}
-              </p>
-              <h1>{"Loading..."}</h1>
-              <span>{"Loading..."}</span>
-            </div>
+      {data.map((post) => (
+        <div key={post.id} className={styles.card}>
+          <div className={styles.image}>
+            <Image
+              src={post.imageUrl}
+              alt={post.title}
+              width={600}
+              height={400}
+              placeholder="blur"
+              blurDataURL="/placeholder.svg"
+              quality={100}
+            />
           </div>
-          <div className={styles.card}>
-            <div className={styles.image}>
-              <Image
-                src={"/placeholder.svg"}
-                alt={"Something Went Wrong!"}
-                width={600}
-                placeholder="blur"
-        blurDataURL="/placeholder.svg"
-                quality={100}
-                height={400}
-              />
-            </div>
-            <div className={styles.info}>
-              <p>
-                {"Loading..."} <BsDot />{" "}{"Loading..."}
-              </p>
-              <h1>{"Loading..."}</h1>
-              <span>{"Loading..."}</span>
-            </div>
+          <div className={styles.info}>
+            <p>
+              {post.categories} <BsDot /> {post.author}
+            </p>
+            <h1>{post.title}</h1>
+            <span className="truncate">{post.shortDescription}</span>
           </div>
-          <div className={styles.card}>
-            <div className={styles.image}>
-              <Image
-                src={"/placeholder.svg"}
-                alt={"Something Went Wrong!"}
-                width={600}
-                placeholder="blur"
-        blurDataURL="/placeholder.svg"
-                quality={100}
-                height={400}
-              />
-            </div>
-            <div className={styles.info}>
-              <p>
-                {"Loading..."} <BsDot />{" "}{"Loading..."}
-              </p>
-              <h1>{"Loading..."}</h1>
-              <span>{"Loading..."}</span>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <div className={styles.image}>
-              <Image
-                src={"/placeholder.svg"}
-                alt={"Something Went Wrong!"}
-                width={600}
-                placeholder="blur"
-        blurDataURL="/placeholder.svg"
-                quality={100}
-                height={400}
-              />
-            </div>
-            <div className={styles.info}>
-              <p>
-                {"Loading..."} <BsDot />{" "}{"Loading..."}
-              </p>
-              <h1>{"Loading..."}</h1>
-              <span>{"Loading..."}</span>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <div className={styles.image}>
-              <Image
-                src={"/placeholder.svg"}
-                alt={"Something Went Wrong!"}
-                width={600}
-                placeholder="blur"
-        blurDataURL="/placeholder.svg"
-                quality={100}
-                height={400}
-              />
-            </div>
-            <div className={styles.info}>
-              <p>
-                {"Loading..."} <BsDot />{" "}{"Loading..."}
-              </p>
-              <h1>{"Loading..."}</h1>
-              <span>{"Loading..."}</span>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <div className={styles.image}>
-              <Image
-                src={"/placeholder.svg"}
-                alt={"Something Went Wrong!"}
-                width={600}
-                placeholder="blur"
-        blurDataURL="/placeholder.svg"
-                quality={100}
-                height={400}
-              />
-            </div>
-            <div className={styles.info}>
-              <p>
-                {"Loading..."} <BsDot />{" "}{"Loading..."}
-              </p>
-              <h1>{"Loading..."}</h1>
-              <span>{"Loading..."}</span>
-            </div>
-          </div>
+        </div>
+      ))}
     </div>
   );
 };

@@ -180,7 +180,7 @@ export default function Page() {
                 ></textarea>
               </div>
               <div className="relative mb-2 py-0 text-gray-400 text-xs">
-                {`Your Authors Permalink: http://localhost:3000/authors/${permalink}`}
+                {`Your Authors Permalink: https://healthcare-biodiversity.vercel.app/authors/${permalink}`}
               </div>
               <Button type="submit">Add</Button>
             </form>

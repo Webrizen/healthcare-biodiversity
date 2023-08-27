@@ -109,7 +109,7 @@ export default function Page() {
                 />
               </div>
               <div className="relative mb-2 py-0 text-gray-400 text-xs">
-                {`Your Categories  Permalink: http://localhost:3000/categories/${permalink}`}
+                {`Your Categories  Permalink: https://healthcare-biodiversity.vercel.app/categories/${permalink}`}
               </div>
               <Button type="submit">Add</Button>
             </form>

@@ -40,11 +40,33 @@ export default function page({ params }) {
   const [allCategories, setAllCategories] = useState([]);
   const [allAuthors, setAllAuthors] = useState([]);
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
+      try {
+        // Display SweetAlert2 while uploading image
+        Swal.fire({
+          title: "Uploading Image...",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          onBeforeOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        const storage = getStorage(firebase_app);
+        const storageRef = ref(storage, `blogImages/${permalink}-${Date.now()}`);
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+
+        setSelectedImage(downloadURL);
+
+        // Close SweetAlert2 after successful upload
+        Swal.close();
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        Swal.fire("Error", "Failed to upload image", "error");
+      }
     }
   };
 
@@ -131,15 +153,6 @@ export default function page({ params }) {
       setPermalink(newPermalink);
     }
 
-    // Update image if selectedImage has changed
-    if (selectedImage && selectedImage !== blogData.imageUrl) {
-      const storage = getStorage(firebase_app);
-      const storageRef = ref(storage, `blogImages/${permalink}-${Date.now()}`);
-      await uploadBytes(storageRef, selectedImage);
-      const downloadURL = await getDownloadURL(storageRef);
-      setSelectedImage(downloadURL);
-    }
-
     // Update the blog data in Firestore
     const updatedBlogData = {
       title: blogTitle,
@@ -188,25 +201,25 @@ export default function page({ params }) {
               border: "none",
             }}
             placeholder="enter-your-blog-title"
-            value={`Your Blog Permalink: http://localhost:3000/blog/${permalink}`}
+            value={`Your Blog Permalink: https://healthcare-biodiversity.vercel.app/blog/${permalink}`}
             readOnly
           />
           <div className={styles.imageUpload}>
-            {selectedImage ? (
-              <Image
-                src={selectedImage}
-                width={600}
-                height={400}
-                alt="Selected Image"
-              />
-            ) : (
-              <Image
-                src={Placeholder}
-                width={600}
-                height={400}
-                alt="Placeholder"
-              />
-            )}
+          {selectedImage ? (
+            <img
+              src={selectedImage}
+              alt="Selected Image"
+              width={600}
+              height={400}
+            />
+          ) : (
+            <Image
+              src={Placeholder}
+              width={600}
+              height={400}
+              alt="Placeholder"
+            />
+          )}
             <input type="file" name="blogImage" onChange={handleImageChange} />
             <div className={styles.infoModel}>
               Choose a Thumbnail Image for Your Blog Post.
