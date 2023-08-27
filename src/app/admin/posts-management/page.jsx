@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline";
 import {
   Card,
   CardHeader,
@@ -16,9 +16,15 @@ import {
   Input,
   Spinner,
 } from "@material-tailwind/react";
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import firebase_app from "@/firebase/config";
-import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const TABLE_HEAD = ["Thumbnail", "Title", "Date", "Author", "Edit", "Delete"];
 const POSTS_PER_PAGE = 4;
@@ -26,7 +32,7 @@ const POSTS_PER_PAGE = 4;
 export default function page() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -42,11 +48,14 @@ export default function page() {
 
   useEffect(() => {
     const db = getFirestore(firebase_app);
-    const blogsCollection = collection(db, 'blogs');
+    const blogsCollection = collection(db, "blogs");
 
     // Initialize the listener
     const unsubscribe = onSnapshot(blogsCollection, (snapshot) => {
-      const blogData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const blogData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setBlogPosts(blogData);
       setLoading(false);
     });
@@ -67,6 +76,33 @@ export default function page() {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
+  };
+
+  const db = getFirestore(firebase_app);
+
+  const handleDeletePost = (postId) => {
+    Swal.fire({
+      title: "Delete Blog Post",
+      text: "Are you sure you want to delete this blog post?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#d33",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteDoc(doc(db, "blogs", postId));
+          // Remove the deleted post from the state
+          setBlogPosts((prevPosts) =>
+            prevPosts.filter((post) => post.id !== postId)
+          );
+          Swal.fire("Deleted!", "The blog post has been deleted.", "success");
+        } catch (error) {
+          console.error("Error deleting post:", error);
+        }
+      }
+    });
   };
 
   return (
@@ -119,14 +155,8 @@ export default function page() {
               </tr>
             </thead>
             <tbody>
-            {currentPosts.map(
-              ({
-                imageUrl,
-                title,
-                timestamp,
-                author,
-                id,
-              }) => (
+              {currentPosts.map(
+                ({ imageUrl, title, timestamp, author, id }) => (
                   <tr key={id}>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
@@ -178,8 +208,11 @@ export default function page() {
                     </td>
                     <td className="p-4">
                       <Tooltip content="Edit Blog">
-                        <IconButton variant="text">
-                          <MdDelete className="h-4 w-4" />
+                        <IconButton
+                          variant="text"
+                          onClick={() => handleDeletePost(id)}
+                        >
+                          <TrashIcon className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>
                     </td>
