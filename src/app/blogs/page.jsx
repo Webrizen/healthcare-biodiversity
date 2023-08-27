@@ -35,9 +35,12 @@ export default async function Page() {
     <>
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 mb-20">
+          <div className="w-4/5 flex flex-col gap-1 text-center justify-center items-center h-min mx-auto mb-20">
+          <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900">
             Our Blogs
           </h1>
+          <div class="w-12 h-1 bg-green-500 rounded mt-2 mb-4"></div>
+          </div>
           <div className="flex flex-wrap -m-4">
             {blogs.map(
               ({
