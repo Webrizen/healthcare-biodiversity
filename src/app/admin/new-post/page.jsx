@@ -157,7 +157,7 @@ export default function Page() {
               border: "none",
             }}
             placeholder="enter-your-blog-title"
-            value={`Your Blog Permalink: https://healthcare-biodiversity.vercel.app/blog/${permalink}`}
+            value={`Your Blog Permalink: https://healthcare-biodiversity.vercel.app/blogs/${permalink}`}
             readOnly
           />
           <div className={styles.imageUpload}>
