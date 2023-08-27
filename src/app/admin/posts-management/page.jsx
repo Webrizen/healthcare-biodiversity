@@ -27,7 +27,7 @@ import firebase_app from "@/firebase/config";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
-const TABLE_HEAD = ["Thumbnail", "Title", "Date", "Author", "Edit", "Delete"];
+const TABLE_HEAD = ["Thumbnail", "Title", "Date", "views", "Author", "Edit", "Delete"];
 const POSTS_PER_PAGE = 4;
 
 export default function page() {
@@ -157,7 +157,7 @@ export default function page() {
             </thead>
             <tbody>
               {currentPosts.map(
-                ({ imageUrl, title, timestamp, author, id }) => (
+                ({ imageUrl, title, timestamp, views, author, id }) => (
                   <tr key={id}>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
@@ -189,6 +189,15 @@ export default function page() {
                               timestamp.seconds * 1000
                             ).toLocaleDateString()
                           : ""}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {views}
                       </Typography>
                     </td>
                     <td className="p-4">
