@@ -5,7 +5,7 @@ import styles from '@/styles/home.module.css';
 
 // Fetch the latest post data from the API
 async function fetchLatestPostData() {
-  const response = await fetch("https://healthcare-biodiversity.vercel.app/api/blogs");
+  const response = await fetch("https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'force-cache' }, { next: { revalidate: 3600 } });
   if (!response.ok) {
     throw new Error("Failed to fetch latest post data");
   }
@@ -15,7 +15,7 @@ async function fetchLatestPostData() {
 
 // Fetch the Trending post data from the API
 async function fetchTrendingPostData() {
-  const response = await fetch("https://healthcare-biodiversity.vercel.app/api/blogs");
+  const response = await fetch("https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'force-cache' }, { next: { revalidate: 3600 } });
   if (!response.ok) {
     throw new Error("Failed to fetch Trending posts data");
   }
