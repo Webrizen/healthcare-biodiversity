@@ -8,6 +8,7 @@ import styles from "@/styles/admin.module.css";
 import Placeholder from "@/assets/profile-placeholder.svg";
 import Image from "next/image";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { AuthorsTable } from "@/components/admin/AuthorsTable";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("form");
@@ -188,7 +189,7 @@ export default function Page() {
 
         {activeTab === "datatable" && (
           <div className="mt-6 p-0 bg-white rounded-md shadow-md">
-            Table Holder
+            <AuthorsTable />
           </div>
         )}
       </div>

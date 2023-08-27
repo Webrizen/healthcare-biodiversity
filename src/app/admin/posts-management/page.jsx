@@ -1,10 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import {
-  ArrowDownTrayIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Card,
   CardHeader,
@@ -17,24 +14,39 @@ import {
   IconButton,
   Tooltip,
   Input,
-  Spinner
-} from '@material-tailwind/react';
-import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
-import firebase_app from '@/firebase/config';
+  Spinner,
+} from "@material-tailwind/react";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import firebase_app from "@/firebase/config";
+import { MdDelete } from "react-icons/md";
 
-const TABLE_HEAD = ['Thumbnail', 'Title', 'Date', 'Author', 'Actions'];
+const TABLE_HEAD = ["Thumbnail", "Title", "Date", "Author", "Edit", "Delete"];
+const POSTS_PER_PAGE = 4;
 
 export default function page() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const lastPostIndex = currentPage * POSTS_PER_PAGE;
+  const firstPostIndex = lastPostIndex - POSTS_PER_PAGE;
+  const currentPosts = blogPosts.slice(firstPostIndex, lastPostIndex);
+
+  const totalPages = Math.ceil(blogPosts.length / POSTS_PER_PAGE);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   useEffect(() => {
     const db = getFirestore(firebase_app);
     const blogsCollection = collection(db, 'blogs');
-    
+
     // Initialize the listener
     const unsubscribe = onSnapshot(blogsCollection, (snapshot) => {
-      const blogData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const blogData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setBlogPosts(blogData);
       setLoading(false);
     });
@@ -44,6 +56,18 @@ export default function page() {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    // Filter the blog posts based on search term
+    const filtered = blogPosts.filter((post) =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredPosts(filtered);
+  }, [searchTerm, blogPosts]);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   return (
     <Card className="h-full w-full">
@@ -62,38 +86,40 @@ export default function page() {
               <Input
                 label="Search"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                value={searchTerm}
+                onChange={handleSearchChange}
               />
             </div>
           </div>
         </div>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
-      {loading ? (
+        {loading ? (
           <div className="flex justify-center items-center h-64">
-            <Spinner/>
+            <Spinner />
           </div>
         ) : (
-        <table className="w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+          <table className="w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th
+                    key={head}
+                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                   >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {blogPosts.map(
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+            {currentPosts.map(
               ({
                 imageUrl,
                 title,
@@ -101,90 +127,96 @@ export default function page() {
                 author,
                 id,
               }) => (
-                <tr key={id}>
-                  <td className="p-4">
-                    <div className="flex items-center gap-3">
-                      <Avatar
-                        src={imageUrl}
-                        alt={title}
-                        size="md"
-                        className="border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1"
-                      />
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {title}
-                    </Typography>
-                  </td>
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {timestamp && timestamp.seconds
-                        ? new Date(
-                            timestamp.seconds * 1000
-                          ).toLocaleDateString()
-                        : ''}
-                    </Typography>
-                  </td>
-                  <td className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {author}
-                    </Typography>
-                  </td>
-                  <td className="p-4">
-                    <Tooltip content="Edit Blog">
-                      <IconButton variant="text">
-                        <PencilIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
+                  <tr key={id}>
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <Avatar
+                          src={imageUrl}
+                          alt={title}
+                          size="md"
+                          className="border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1"
+                        />
+                      </div>
+                    </td>
+                    <td className="p-4 w-52">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {title}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {timestamp && timestamp.seconds
+                          ? new Date(
+                              timestamp.seconds * 1000
+                            ).toLocaleDateString()
+                          : ""}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {author}
+                      </Typography>
+                    </td>
+                    <td className="p-4">
+                      <Tooltip content="Edit Blog">
+                        <IconButton variant="text">
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td>
+                    <td className="p-4">
+                      <Tooltip content="Edit Blog">
+                        <IconButton variant="text">
+                          <MdDelete className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
         )}
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" size="sm">
+        <Button
+          variant="outlined"
+          size="sm"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           Previous
         </Button>
         <div className="flex items-center gap-2">
-          <IconButton variant="outlined" size="sm">
-            1
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            2
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            3
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            ...
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            8
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            9
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            10
-          </IconButton>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <IconButton
+              key={index}
+              variant={currentPage === index + 1 ? "filled" : "text"}
+              size="sm"
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </IconButton>
+          ))}
         </div>
-        <Button variant="outlined" size="sm">
+        <Button
+          variant="outlined"
+          size="sm"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
           Next
         </Button>
       </CardFooter>
