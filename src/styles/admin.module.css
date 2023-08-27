@@ -84,6 +84,12 @@
     z-index: 2;
 }
 
+.blogTitleInput{
+    font-size: 4rem;
+    border: none !important;
+    outline: none !important;
+}
+
 .infoModel{
     position: absolute;
     transform: translate(-50%, -50%);

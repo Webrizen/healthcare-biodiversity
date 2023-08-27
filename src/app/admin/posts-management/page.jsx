@@ -25,6 +25,7 @@ import {
 } from "firebase/firestore";
 import firebase_app from "@/firebase/config";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 const TABLE_HEAD = ["Thumbnail", "Title", "Date", "Author", "Edit", "Delete"];
 const POSTS_PER_PAGE = 4;
@@ -201,9 +202,11 @@ export default function page() {
                     </td>
                     <td className="p-4">
                       <Tooltip content="Edit Blog">
+                        <Link href={`/admin/edit-post/${id}`}>
                         <IconButton variant="text">
                           <PencilIcon className="h-4 w-4" />
                         </IconButton>
+                        </Link>
                       </Tooltip>
                     </td>
                     <td className="p-4">

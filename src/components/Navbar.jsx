@@ -3,15 +3,14 @@ import React from "react";
 import styles from "@/styles/navbar.module.css";
 import Image from "next/image";
 import Logo from "@/assets/logo.webp";
-import { BiSearch } from "react-icons/bi";
-import { MdNotificationsActive } from "react-icons/md";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { IconButton  } from "@material-tailwind/react";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
     <>
       <header className={styles.header}>
+        <Link href="/">
         <div className={styles.logo}>
           <Image
             src={Logo}
@@ -21,6 +20,7 @@ export default function Navbar() {
           />
           <span>Healthcarebiodiversity</span>
         </div>
+        </Link>
         <div className={styles.links}>
           <IconButton  variant="text" className={styles.ico}>
             <svg
