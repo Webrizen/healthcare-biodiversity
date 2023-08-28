@@ -52,7 +52,7 @@ ul {
 *::-webkit-scrollbar-thumb {
   background-color: none !important;
   border-radius: 0px !important;
-  border: 0px solid transparent !important;
+  border: none !important;
 }
 
 .loader {
