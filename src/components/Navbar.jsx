@@ -15,6 +15,7 @@ export default function Navbar() {
   const [categories, setCategories] = useState([]);
   const [scrollLeft, setScrollLeft] = useState(0);
   const categoriesContainerRef = useRef(null);
+  const isLoading = categories.length === 0;
 
   useEffect(() => {
     fetch("/api/categories")
@@ -177,13 +178,22 @@ export default function Navbar() {
             className="flex flex-row gap-2 overflow-x-auto"
             style={{ flex: "1" }}
           >
-            {categories.map((category) => (
-              <Link href={`/categories/${category.id}`} key={category.id}>
-                <div className="rounded-full w-min p-2 text-blue-gray-500 bg-gray-100 whitespace-nowrap text-xs">
-                  {category.name}
-                </div>
-              </Link>
-            ))}
+            {isLoading ? (
+              Array.from({ length: 50 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="rounded-full w-28 h-2 p-2 bg-gray-300 animate-pulse"
+                >..................</div>
+              ))
+            ) : (
+              categories.map((category) => (
+                <Link href={`/categories/${category.id}`} key={category.id}>
+                  <div className="rounded-full w-min p-2 text-blue-gray-500 bg-gray-100 whitespace-nowrap text-xs">
+                    {category.name}
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
           {categoriesContainerRef.current &&
             scrollLeft <

@@ -38,6 +38,25 @@ export function PostsSlider() {
     }
   }
 
+  const loadingPlaceholder = (
+    <div className="p-4 w-full rounded-lg overflow-hidden animate-pulse" style={{ height: "500px" }}>
+      <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden relative">
+        <div className="h-72 bg-gray-300"></div>
+        <div className="p-6 absolute bottom-0 left-0 right-0 rounded-lg bg-gray-800 bg-opacity-50">
+          <div className="rounded-full w-24 h-6 bg-gray-300 mb-2"></div>
+          <div className="h-6 bg-gray-300 w-4/5 mb-3"></div>
+          <div className="h-4 bg-gray-300 w-2/3 mb-2"></div>
+          <div className="h-4 bg-gray-300 w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-300 w-2/5 mb-2"></div>
+          <div className="flex items-center gap-3">
+            <div className="h-6 w-20 bg-gray-300"></div>
+            <div className="h-6 w-12 bg-gray-300"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Carousel
       className="rounded-xl"
@@ -55,7 +74,11 @@ export function PostsSlider() {
         </div>
       )}
     >
-      {blogPosts.map((post) => (
+      {blogPosts.length === 0
+        ? Array.from({ length: 3 }).map((_, index) => (
+            <div key={index}>{loadingPlaceholder}</div>
+          ))
+        : blogPosts.map((post) => (
         <div
           key={post.id}
           className="p-4 w-full rounded-lg overflow-hidden"

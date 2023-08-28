@@ -10,10 +10,11 @@ import {
 } from "firebase/firestore";
 import firebase_app from "@/firebase/config";
 import Image from "next/image";
-import { Typography, Avatar, IconButton, Button } from "@material-tailwind/react";
+import { Typography, Avatar, IconButton, Button, Spinner } from "@material-tailwind/react";
 import { BsDot, BsFacebook, BsLinkedin, BsTwitter } from "react-icons/bs";
 import { FiMail, FiLink } from "react-icons/fi";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 async function fetchBlogData(blogId) {
   const db = getFirestore(firebase_app);
@@ -28,12 +29,30 @@ async function fetchBlogData(blogId) {
   return null;
 }
 
+async function fetchAuthorImage(authorName) {
+  const response = await fetch("/api/authors");
+  const data = await response.json();
+
+  const author = data.find((author) => author.name === authorName);
+  return author?.profileImageUrl || "/placeholder.svg"; 
+}
+
+async function fetchAuthorId(authorName) {
+  const response = await fetch("/api/authors");
+  const data = await response.json();
+
+  const author = data.find((author) => author.name === authorName);
+  return author?.id || null;
+}
+
 export default function singleBlog({ id }) {
   const blogId = id;
   const [viewCount, setViewCount] = useState(0);
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
   const [blogData, setBlogData] = useState(null);
+  const [AuthorImage, setAuthorImage] = useState("/placeholder.svg");
+  const [authorId, setAuthorId] = useState(null);
 
   const incrementViewCount = async () => {
     try {
@@ -115,9 +134,14 @@ export default function singleBlog({ id }) {
 
   useEffect(() => {
     incrementViewCount();
+
     const fetchData = async () => {
       const blogData = await fetchBlogData(blogId);
       if (blogData) {
+        const authorImage = await fetchAuthorImage(blogData.author);
+        const authorId = await fetchAuthorId(blogData.author);
+        setAuthorImage(authorImage);
+        setAuthorId(authorId);
         setViewCount(blogData.views || 0);
         setLikeCount(blogData.likes || 0);
         setHasLiked(blogData.likes > 0);
@@ -157,7 +181,7 @@ export default function singleBlog({ id }) {
   return (
     <>
       <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
-      <h1 className="text-5xl font-medium mb-4">{blogData?.title || 'Loading...'}</h1>
+      <h1 className="text-5xl font-medium mb-4">{blogData?.title || <Spinner/>}</h1>
         <div className="bg-cover text-center overflow-hidden rounded-xl">
           <figure>
             <Image
@@ -175,15 +199,17 @@ export default function singleBlog({ id }) {
         <div className="max-w-screen-xl mx-auto my-5">
           <div className="top-content my-4 flex flex-row justify-between items-center">
             <div className="flex items-center gap-4">
-              <Avatar src="/placeholder.svg" alt="avatar | Author Profile PIC" />
+            <Avatar src={AuthorImage || '/placeholder.svg'} alt="Author Profile PIC" />
               <div>
-                <Typography variant="h6">{blogData?.author || 'Author Name'}</Typography>
+                <Link href={`/authors/${authorId}`}>
+                <Typography variant="h6">{blogData?.author || <Spinner/>}</Typography>
+                </Link>
                 <Typography
                   variant="small"
                   color="gray"
                   className="font-normal flex flex-row gap-1 items-center justify-center"
                 >
-                  {blogData?.timestamp ? `Posted ${timeAgo(blogData.timestamp)}` : 'Posted - ago'} <BsDot /> {blogData?.categories || 'Category'}
+                  {blogData?.timestamp ? `Posted ${timeAgo(blogData.timestamp)}` : 'Posted - ago'} <BsDot /> {blogData?.categories || <Spinner/>}
                 </Typography>
               </div>
             </div>
@@ -208,7 +234,7 @@ export default function singleBlog({ id }) {
           <div className="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
             <div 
             className="content"
-            dangerouslySetInnerHTML={{ __html: blogData?.content || 'Loading Content...' }}
+            dangerouslySetInnerHTML={{ __html: blogData?.content || <Spinner/> }}
              />
           </div>
         </div>
