@@ -33,6 +33,7 @@ export default function singleBlog({ id }) {
   const [viewCount, setViewCount] = useState(0);
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
+  const [blogData, setBlogData] = useState(null);
 
   const incrementViewCount = async () => {
     try {
@@ -111,6 +112,7 @@ export default function singleBlog({ id }) {
       });
     }
   };
+
   useEffect(() => {
     incrementViewCount();
     const fetchData = async () => {
@@ -119,26 +121,54 @@ export default function singleBlog({ id }) {
         setViewCount(blogData.views || 0);
         setLikeCount(blogData.likes || 0);
         setHasLiked(blogData.likes > 0);
+        setBlogData(blogData);
       }
     };
     fetchData();
   }, [blogId]);
 
+  function timeAgo(timestamp) {
+    const currentDate = new Date();
+    const providedDate = new Date(timestamp.seconds * 1000);
+  
+    const timeDifference = currentDate - providedDate;
+    const seconds = Math.floor(timeDifference / 1000);
+  
+    if (seconds < 60) {
+      return `${seconds} seconds ago`;
+    } else if (seconds < 3600) {
+      const minutes = Math.floor(seconds / 60);
+      return `${minutes} minutes ago`;
+    } else if (seconds < 86400) {
+      const hours = Math.floor(seconds / 3600);
+      return `${hours} hours ago`;
+    } else if (seconds < 2592000) {
+      const days = Math.floor(seconds / 86400);
+      return `${days} days ago`;
+    } else if (seconds < 31536000) {
+      const months = Math.floor(seconds / 2592000);
+      return `${months} months ago`;
+    } else {
+      const years = Math.floor(seconds / 31536000);
+      return `${years} years ago`;
+    }
+  }
 
   return (
     <>
       <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
+      <h1 className="text-5xl font-medium mb-4">{blogData?.title || 'Loading...'}</h1>
         <div className="bg-cover text-center overflow-hidden rounded-xl">
           <figure>
             <Image
-              src="/placeholder.svg"
+              src={blogData?.imageUrl || "/placeholder.svg"}
               alt="Blog Image"
               width={600}
               height={400}
               className="w-full rounded-xl"
             />
             <figcaption className="mt-2 text-center font-normal">
-              Image caption
+            {blogData?.title || 'Image caption'}
             </figcaption>
           </figure>
         </div>
@@ -147,13 +177,13 @@ export default function singleBlog({ id }) {
             <div className="flex items-center gap-4">
               <Avatar src="/placeholder.svg" alt="avatar | Author Profile PIC" />
               <div>
-                <Typography variant="h6">Author Name</Typography>
+                <Typography variant="h6">{blogData?.author || 'Author Name'}</Typography>
                 <Typography
                   variant="small"
                   color="gray"
                   className="font-normal flex flex-row gap-1 items-center justify-center"
                 >
-                  Posted on Date <BsDot /> category
+                  {blogData?.timestamp ? `Posted ${timeAgo(blogData.timestamp)}` : 'Posted - ago'} <BsDot /> {blogData?.categories || 'Category'}
                 </Typography>
               </div>
             </div>
@@ -176,21 +206,10 @@ export default function singleBlog({ id }) {
             </div>
           </div>
           <div className="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-            <div className="content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia esse
-              ea, totam officiis maiores consequatur reiciendis nihil blanditiis
-              repellendus quos sit aliquid ipsum soluta quo nam, dignissimos,
-              ullam fugit sapiente.
-              <br /> <br /> <br />
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-              consequuntur facilis obcaecati nulla laboriosam, est aut,
-              exercitationem pariatur tempore eum dolorum fuga facere officia.
-              Possimus praesentium cum quo ipsam vel! Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Iusto iste unde nostrum distinctio
-              tenetur doloribus nihil, labore expedita maxime laboriosam enim.
-              Accusantium tenetur, dolore maxime repudiandae obcaecati
-              temporibus earum impedit.
-            </div>
+            <div 
+            className="content"
+            dangerouslySetInnerHTML={{ __html: blogData?.content || 'Loading Content...' }}
+             />
           </div>
         </div>
       </div>

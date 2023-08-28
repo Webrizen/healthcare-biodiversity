@@ -1,16 +1,12 @@
-import LatestPost from '@/components/posts/LatestPost';
-import SixPosts from '@/components/posts/SixPosts';
-import TrendingPosts from '@/components/posts/TrendingPosts';
-import styles from '@/styles/home.module.css';
-import Link from 'next/link';
+import { PostsSlider } from '@/components/PostsSlider';
 
 
 export default async function Home() {
 
   return (
     <>
-    <section>
-      <h1>Home Page</h1>
+    <section className='flex flex-col gap-2 w-4/5 mx-auto my-2'>
+      <PostsSlider/>
     </section>
     </>
   );
