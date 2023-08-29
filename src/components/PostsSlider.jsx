@@ -4,24 +4,8 @@ import { Carousel } from "@material-tailwind/react";
 import Image from "next/image";
 import Link from "next/link";
 
-export function PostsSlider() {
-  const [blogPosts, setBlogPosts] = useState([]);
-
-  useEffect(() => {
-    // Fetch data from the API endpoint here
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/blogs");
-        const data = await response.json();
-        // setBlogPosts();
-        setBlogPosts(data.blogPosts.slice(0, 7));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+export function PostsSlider({ data }) {
+  const blogPosts = data;
 
   function formatNumber(number) {
     const billion = 1000000000;
@@ -88,7 +72,7 @@ export function PostsSlider() {
           <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden relative">
             <Image
               className="h-full w-full object-cover object-center"
-              src={post.imageUrl}
+              src={post.imageUrl || '/placeholder.svg'}
               alt="blog"
               width={600}
               height={400}
@@ -96,10 +80,10 @@ export function PostsSlider() {
             <div className="p-6 absolute bottom-0 left-0 right-0 rounded-lg" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.5), transparent)' }}>
               <div className="rounded-full w-min p-2 text-blue-gray-500 bg-transparent backdrop-blur-md whitespace-nowrap text-xs mb-2">{post.categories}</div>
               <h1 className="title-font text-3xl font-medium text-white mb-3">
-                {post.title}
+                {post.title || 'Loading...'}
               </h1>
               <p className="leading-relaxed mb-3 truncate text-white">
-                {post.shortDescription}
+                {post.shortDescription || 'Loading...'}
               </p>
               <div className="flex items-center flex-wrap ">
                 <Link href={`/blogs/${post.id}`} className="text-green-500 inline-flex items-center md:mb-2 lg:mb-0">

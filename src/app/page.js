@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 async function fetchBlogPost() {
   const response = await fetch(
-    "https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'no-store' }, { next: { revalidate: 3600 } });
+    "https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'no-cache' }, { next: { revalidate: 30 } });
   if (!response.ok) {
     throw new Error("Failed to fetch latest post data");
   }
@@ -14,6 +14,7 @@ async function fetchBlogPost() {
 
 export default async function Home() {
   const blogs = await fetchBlogPost();
+  const firstSevenBlogs = blogs.slice(2, 8);
 
   function formatNumber(number) {
     const billion = 1000000000;
@@ -52,10 +53,10 @@ export default async function Home() {
         <div className="container px-5 py-24 mx-auto flex flex-wrap">
           <div className="lg:w-2/3 mx-auto">
             <div className="flex flex-wrap w-full bg-gray-100 rounded-md relative mb-4">
-              <PostsSlider />
+              <PostsSlider data={blogs} />
             </div>
             <div className="flex flex-wrap -mx-2 p-2">
-              <SixPosts data={blogs} />
+              <SixPosts data={firstSevenBlogs} />
             <Link href="/blogs" className="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg mx-auto mt-3">Read More.</Link>
             </div>
           </div>

@@ -5,10 +5,9 @@ import { BsDot } from "react-icons/bs";
 import Link from "next/link";
 
 const SixPosts = ({ data }) => {
-  const postsToShow = data.slice(7);
   return (
     <div className={styles.SixPosts}>
-      {postsToShow.map((post) => (
+      {data.map((post) => (
         <div key={post.id} className={styles.card}>
           <Link href={`/blogs/${post.id}`}>
           <div className={styles.image}>
