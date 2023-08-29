@@ -2,9 +2,12 @@ import { PostsSlider } from '@/components/PostsSlider';
 import SixPosts from '@/components/posts/SixPosts';
 import Link from 'next/link';
 
+export const revalidate = 60;
+export const dynamic = 'force-dynamic'
+
 async function fetchBlogPost() {
   const response = await fetch(
-    "https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'no-cache' }, { next: { revalidate: 30 } });
+    "https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'no-cache', dynamic }, { next: { revalidate } });
   if (!response.ok) {
     throw new Error("Failed to fetch latest post data");
   }

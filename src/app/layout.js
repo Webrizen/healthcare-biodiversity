@@ -14,9 +14,6 @@ export const metadata = {
   publisher: 'Supratim Bhattacharya',
 }
 
-export const revalidate = 60;
-export const dynamic = 'force-dynamic'
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
