@@ -13,7 +13,8 @@ export function PostsSlider() {
       try {
         const response = await fetch("/api/blogs");
         const data = await response.json();
-        setBlogPosts(data.blogPosts);
+        // setBlogPosts();
+        setBlogPosts(data.blogPosts.slice(0, 7));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -81,7 +82,7 @@ export function PostsSlider() {
         : blogPosts.map((post) => (
         <div
           key={post.id}
-          className="p-4 w-full rounded-lg overflow-hidden"
+          className=" w-full rounded-lg overflow-hidden"
           style={{ height: "500px" }}
         >
           <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden relative">
@@ -92,7 +93,7 @@ export function PostsSlider() {
               width={600}
               height={400}
             />
-            <div className="p-6 absolute bottom-0 left-0 right-0 rounded-lg bg-gradient-to-t from-gray-800 to-transparent">
+            <div className="p-6 absolute bottom-0 left-0 right-0 rounded-lg" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.5), transparent)' }}>
               <div className="rounded-full w-min p-2 text-blue-gray-500 bg-transparent backdrop-blur-md whitespace-nowrap text-xs mb-2">{post.categories}</div>
               <h1 className="title-font text-3xl font-medium text-white mb-3">
                 {post.title}

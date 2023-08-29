@@ -2,12 +2,15 @@ import React from "react";
 import styles from "@/styles/home.module.css";
 import Image from "next/image";
 import { BsDot } from "react-icons/bs";
+import Link from "next/link";
 
 const SixPosts = ({ data }) => {
+  const postsToShow = data.slice(7);
   return (
     <div className={styles.SixPosts}>
-      {data.map((post) => (
+      {postsToShow.map((post) => (
         <div key={post.id} className={styles.card}>
+          <Link href={`/blogs/${post.id}`}>
           <div className={styles.image}>
             <Image
               src={post.imageUrl}
@@ -26,6 +29,7 @@ const SixPosts = ({ data }) => {
             <h1>{post.title}</h1>
             <span className="truncate">{post.shortDescription}</span>
           </div>
+          </Link>
         </div>
       ))}
     </div>

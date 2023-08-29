@@ -53,7 +53,6 @@ export default function Navbar() {
               width={45}
               height={45}
             />
-            <span>Healthcarebiodiversity</span>
           </Link>
           <div className="flex flex-row gap-1 items-center w-1/2 rounded-3xl text-blue-gray-500 bg-gray-100 px-2">
             <IconButton variant="text" className={styles.ico}>
@@ -94,8 +93,8 @@ export default function Navbar() {
               </svg>
             </IconButton>
           </div>
-          <div className={styles.links}>
-            <Popover>
+          <div className={styles.links} >
+            <Popover className="z-50">
               <PopoverHandler>
                 <IconButton variant="text" className={styles.ico}>
                   <svg
