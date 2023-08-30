@@ -42,7 +42,7 @@ export default async function Home() {
 
   return (
     <>
-      <section className="text-gray-600 body-font bg-[url('/hero-bg.png')] bg-covers bg-center">
+      <section className="text-gray-600 body-font bg-[url('/hero-bg.png')] bg-contains bg-center bg-no-repeat">
         <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
           <div className="rounded-full w-min p-2 px-4 text-blue-gray-500 bg-gray-100 whitespace-nowrap text-xs mb-4">Healthcarebiodiversity</div>
           <div className="text-center lg:w-2/3 w-full">
