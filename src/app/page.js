@@ -42,7 +42,7 @@ export default async function Home() {
 
   return (
     <>
-      <section className="text-gray-600 body-font">
+      <section className="text-gray-600 body-font bg-[url('/hero-bg.png')] bg-covers bg-center">
         <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
           <div className="rounded-full w-min p-2 px-4 text-blue-gray-500 bg-gray-100 whitespace-nowrap text-xs mb-4">Healthcarebiodiversity</div>
           <div className="text-center lg:w-2/3 w-full">
@@ -52,7 +52,7 @@ export default async function Home() {
             <div className="flex justify-center">
               <Link href="#explore">
                 <button className="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Explore</button></Link>
-              <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Join Our Community</button>
+              <button className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Our Community</button>
             </div>
           </div>
         </div>
