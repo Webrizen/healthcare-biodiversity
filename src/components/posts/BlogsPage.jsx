@@ -59,10 +59,10 @@ export default function BlogsPage({ blogs }) {
             views,
             likes,
           }) => (
-            <div key={id} className="p-4 md:w-1/3">
+            <div key={id} className="p-4 md:w-1/3 overflow-hidden">
               <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                 <Image
-                  className="lg:h-48 md:h-36 w-full object-cover object-center"
+                  className="lg:h-48 md:h-36 object-cover object-center"
                   src={imageUrl}
                   alt="blog"
                   width={600}
