@@ -185,7 +185,7 @@ export default function singleBlog({ id }) {
 
   return (
     <>
-      <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative bg-[url('/my-bg.png')] rounded-md bg-contain bg-no-repeat">
+      <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
         <h1 className="md:font-bold md:text-6xl text-5xl font-bold mb-4 text-gray-800">
           {blogData?.title || <Spinner />}
         </h1>
