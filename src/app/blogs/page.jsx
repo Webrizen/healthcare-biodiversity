@@ -1,8 +1,10 @@
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import Loading from "@/components/Loading";
 import BlogsPage from "@/components/posts/BlogsPage";
+
+export const metadata = {
+  title: 'Blogs',
+  description: 'Explore a diverse collection of blogs at Healthcare Biodiversity, covering insightful content on health care and biodiversity topics. Discover valuable insights today!',
+}
 
 async function fetchBlogPost() {
   const response = await fetch(

@@ -1,0 +1,15 @@
+{
+    "name": "healthcare biodiversity",
+    "short_name": "healthcarebiodiversity",
+    "start_url": "https://healthcarebiodiversity.com",
+    "display": "standalone",
+    "description": "Welcome to healthcare biodiversity a vibrant online hub dedicated to enhancing your holistic well-being and nurturing your curiosity about the diverse wonders of health care and biodiversity.",
+    "icons": [
+      {
+        "src": "https://healthcarebiodiversity.com/logo.webp",
+        "sizes": "48x48",
+        "type": "image/webp"
+      }
+    ]
+  }
+  

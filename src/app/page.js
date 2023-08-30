@@ -3,7 +3,12 @@ import SixPosts from '@/components/posts/SixPosts';
 import Link from 'next/link';
 
 export const revalidate = 60;
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
+
+export const metadata = {
+  title: 'Home | healthcare biodiversity',
+  description: 'Welcome to healthcare biodiversity a vibrant online hub dedicated to enhancing your holistic well-being and nurturing your curiosity about the diverse wonders of health care and biodiversity.',
+}
 
 async function fetchBlogPost() {
   const response = await fetch(
