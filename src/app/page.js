@@ -42,11 +42,63 @@ export default async function Home() {
 
   return (
     <>
-      <section className="text-gray-600 body-font bg-[url('/hero-bg.png')] bg-contains bg-center bg-no-repeat">
-        <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+      <div className="background">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <section className="text-white body-font overflow-hidden">
+        <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col md:bg-[url('/hero-bg.webp')] bg-contains bg-center bg-no-repeat rounded-md overflow-hidden">
           <div className="rounded-full w-min p-2 px-4 text-blue-gray-500 bg-gray-100 whitespace-nowrap text-xs mb-4">Healthcarebiodiversity</div>
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Empower Your Well-being: Explore a World of Free Health, Wellness, and Biodiversity Insights!</h1>
+            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Empower Your Well-being: Explore a World of Free Health, Wellness, and Biodiversity Insights!</h1>
             <p className="mb-8 leading-relaxed">
               Welcome to our vibrant online hub dedicated to enhancing your holistic well-being and nurturing your curiosity about the diverse wonders of health care and biodiversity. Discover a treasure trove of free, insightful content that empowers you to lead a healthier and more sustainable life. Join us in celebrating the incredible tapestry of life while cultivating a healthier you and a greener world. Explore our free content today and embark on a journey towards well-being and biodiversity enlightenment!</p>
             <div className="flex justify-center">
@@ -65,7 +117,7 @@ export default async function Home() {
             </div>
             <div className="flex flex-wrap -mx-2 p-2">
               <SixPosts data={firstSevenBlogs} />
-            <Link href="/blogs" className="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg mx-auto mt-3">Read More.</Link>
+              <Link href="/blogs" className="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg mx-auto mt-3">Read More.</Link>
             </div>
           </div>
         </div>

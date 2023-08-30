@@ -21,7 +21,7 @@ const SixPosts = ({ data }) => {
               quality={100}
             />
           </div>
-          <div className={styles.info}>
+          <div className={`${styles.info} backdrop-blur-3xl`} >
             <p>
               {post.categories} <BsDot /> {post.author}
             </p>
