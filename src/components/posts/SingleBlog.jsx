@@ -250,12 +250,30 @@ export default function singleBlog({ id }) {
             </div>
           </div>
 
-          <div className="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-            <div
-              className="content"
-              dangerouslySetInnerHTML={{
-                __html: blogData?.content || <Spinner />,
-              }}
+          <div className="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r">
+            <iframe
+              title="Blog Content"
+              srcDoc={`
+    <style>
+    
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth !important;
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  a{
+    text-decoration: none !important;
+  }
+      }
+    </style>
+    ${blogData?.content || "<div>Loading content...</div>"}
+  `}
+              className="w-full h-screen rounded-b lg:rounded-b-none lg:rounded-r"
             />
           </div>
 

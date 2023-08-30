@@ -63,26 +63,26 @@ export default function BlogsPage({ blogs }) {
               <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                 <Image
                   className="lg:h-48 md:h-36 object-cover object-center"
-                  src={imageUrl}
+                  src={imageUrl || '/placeholder.svg'}
                   alt="blog"
                   width={600}
                   height={400}
                 />
                 <div className="p-6">
                   <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                    {categories}
+                    {categories || "No Data Found"}
                   </h2>
                   <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                    {title}
+                    {title || "No Data Found"}
                   </h1>
                   <p className="leading-relaxed mb-3 truncate">
-                    {shortDescription}
+                    {shortDescription || "No Data Found"}
                   </p>
                   <div className="flex items-center flex-wrap ">
                     <Link
                       href={`/blogs/${id}`}
                       className="text-green-500 inline-flex items-center md:mb-2 lg:mb-0"
-                      aria-label={title}
+                      aria-label={title || "No Data Found"}
                     >
                       Read More
                       <svg

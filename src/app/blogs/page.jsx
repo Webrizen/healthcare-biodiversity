@@ -8,7 +8,7 @@ export const metadata = {
 
 async function fetchBlogPost() {
   const response = await fetch(
-    "https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'no-store' }, { next: { revalidate: 3600 } });
+    "https://healthcare-biodiversity.vercel.app/api/blogs", { cache: 'no-store' }, { next: { revalidate: 30 } });
   if (!response.ok) {
     throw new Error("Failed to fetch latest post data");
   }

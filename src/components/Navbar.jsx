@@ -93,10 +93,9 @@ export default function Navbar() {
               </svg>
             </IconButton>
           </div>
-          <div className={styles.links} >
-            <Popover className="z-50">
-              <PopoverHandler>
-                <IconButton variant="text" className={styles.ico}>
+          <div className={styles.links}  style={{ zIndex: '999999' }}>
+            <Link href="/notifications">
+            <IconButton variant="text" className={styles.ico}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -112,14 +111,9 @@ export default function Navbar() {
                     />
                   </svg>
                 </IconButton>
-              </PopoverHandler>
-              <PopoverContent>
-                This is a very beautiful popover, show some love.
-              </PopoverContent>
-            </Popover>
-            <Popover>
-              <PopoverHandler>
-                <IconButton variant="text" className={styles.ico}>
+            </Link>
+            <Link href="/settings">
+            <IconButton variant="text" className={styles.ico}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -140,11 +134,7 @@ export default function Navbar() {
                     />
                   </svg>
                 </IconButton>
-              </PopoverHandler>
-              <PopoverContent>
-                This is a very beautiful popover, show some love.
-              </PopoverContent>
-            </Popover>
+            </Link>
           </div>
         </div>
         <div
