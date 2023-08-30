@@ -86,8 +86,8 @@ export function PostsSlider({ data }) {
                 {post.shortDescription || 'Loading...'}
               </p>
               <div className="flex items-center flex-wrap ">
-                <Link href={`/blogs/${post.id}`} className="text-green-500 inline-flex items-center md:mb-2 lg:mb-0">
-                  Learn More
+                <Link href={`/blogs/${post.id}`} aria-label={post.title} className="text-green-500 inline-flex items-center md:mb-2 lg:mb-0">
+                  Read More
                   <svg
                     className="w-4 h-4 ml-2"
                     viewBox="0 0 24 24"

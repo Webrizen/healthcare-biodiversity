@@ -82,8 +82,9 @@ export default function BlogsPage({ blogs }) {
                     <Link
                       href={`/blogs/${id}`}
                       className="text-green-500 inline-flex items-center md:mb-2 lg:mb-0"
+                      aria-label={title}
                     >
-                      Learn More
+                      Read More
                       <svg
                         className="w-4 h-4 ml-2"
                         viewBox="0 0 24 24"
