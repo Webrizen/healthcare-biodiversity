@@ -249,7 +249,20 @@ export default function singleBlog({ id }) {
               </IconButton>
             </div>
           </div>
-
+          <div className="mt-5 flex flex-row gap-2 justify-left items-center">
+            {blogData && blogData.keywords ? (
+              blogData.keywords.split(",").map((keyword, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs"
+                >
+                  {keyword.trim()}
+                </span>
+              ))
+            ) : (
+              <Spinner />
+            )}
+          </div>
           <div className="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r">
             <iframe
               title="Blog Content"
@@ -266,6 +279,10 @@ export default function singleBlog({ id }) {
     font-family: 'Poppins', sans-serif !important;
   }
 
+  body{
+    height: 'auto'
+  }
+
   a{
     text-decoration: none !important;
   }
@@ -273,23 +290,9 @@ export default function singleBlog({ id }) {
     </style>
     ${blogData?.content || "<div>Loading content...</div>"}
   `}
-              className="w-full h-screen rounded-b lg:rounded-b-none lg:rounded-r"
+              className="w-full min-h-screen rounded-b lg:rounded-b-none lg:rounded-r"
+              style={{ minHeight: "200vh", height: 'auto' }}
             />
-          </div>
-
-          <div className="mt-5 flex flex-row gap-2 justify-left items-center">
-            {blogData && blogData.keywords ? (
-              blogData.keywords.split(",").map((keyword, index) => (
-                <span
-                  key={index}
-                  className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs"
-                >
-                  {keyword.trim()}
-                </span>
-              ))
-            ) : (
-              <Spinner />
-            )}
           </div>
         </div>
       </div>

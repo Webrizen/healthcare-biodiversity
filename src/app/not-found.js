@@ -1,8 +1,23 @@
-"use client";
 import Link from 'next/link';
-import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
 import NotFoundImage from '@/assets/404.gif';
+
+export const metadata = {
+  title: "404 - Page Not Found",
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+}
 
 export default function NotFound() {
   return (
@@ -13,7 +28,7 @@ export default function NotFound() {
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">404 - Page Not Found</h1>
           <p className="mb-8 leading-relaxed">Oops! Page not found. The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
           <div className="flex justify-center">
-            <Link href="/"><Button>Go Back</Button></Link>
+            <Link href="/"><button>Go Back</button></Link>
           </div>
         </div>
       </div>
